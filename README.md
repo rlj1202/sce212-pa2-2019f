@@ -12,6 +12,7 @@ Implement a MIPS emulator that executes MIPS instructions loaded on the memory.
 - In this PA, we continue on implementing a MIPS emulator. Likewise the previous PAs, the framework gets a line of command, parses it, and then calls relavant procedures to process the request.
 
 -  We define a program as *a list of machine instructions*. It looks like;
+
 	```
 	0x8c080000
 	0x8c090008  // lw t1, zero + 8
@@ -19,7 +20,7 @@ Implement a MIPS emulator that executes MIPS instructions loaded on the memory.
 	0x20080030  // addi t0 zero 0x30
 	```
 
-- Each line in a program file starts with a hexadecimal number, which is a MIPS machine code. The machine code might be followed by comments (like the 2nd and 4th instructions above). The emulaor is supposed to load the program into memory and starts executing the instructions until it meets a `halt` instruction. See test case files for examples of programs.
+  Each line in a program file starts with a hexadecimal number, which is a MIPS machine code. The machine code might be followed by comments (like the 2nd and 4th instructions above). The emulaor is supposed to load the program into memory and starts executing the instructions until it meets a `halt` instruction. See test case files for examples of programs.
 
 - The machine has 32 registers and their values are in `unsigned int registers[32]`. Their name is specified in `const char *register_names[32]`, and their status can be examined using `show` CLI command. Without specifying the register name, `show` shows all register values as follows;
 
@@ -60,7 +61,8 @@ Implement a MIPS emulator that executes MIPS instructions loaded on the memory.
   [  pc ] 0x00001000
   ```
 
-- You can specify register name to see the value of the register only. Note that register #0 is named to `zr`.
+  You can specify register name to see the value of the register only. Note that register #0 is named to `zr`.
+
   ```
   >> show s4
   [20:s4] 0xbadacafe    3134900990
@@ -69,17 +71,17 @@ Implement a MIPS emulator that executes MIPS instructions loaded on the memory.
   ```
 
 
-- The machine also has 1MB memory which is accessible through  `unsigned char memory[]`. Like the registers, the framework provides `dump` CLI command to examine memory contents. It accepts the starting address and length for command parameters.
+- The machine also has 1MB memory which is accessible through  `unsigned char memory[]`. Like the registers, the framework provides `dump` CLI command to examine memory contents. It accepts the starting address and length for command parameters. Non-printable characters are printed as '.'.
   ```
   >> dump 0 32
-  0x00000000:  00 11 22 33      " 3
+  0x00000000:  00 11 22 33    . . " 3
   0x00000004:  44 55 66 77    D U f w
-  0x00000008:  de ad be ef    � � � �
-  0x0000000c:  00 00 00 00
+  0x00000008:  de ad be ef    . . . .
+  0x0000000c:  00 00 00 00    . . . .
   0x00000010:  68 65 6c 6c    h e l l
   0x00000014:  6f 20 77 6f    o   w o
   0x00000018:  72 6c 64 21    r l d !
-  0x0000001c:  00 00 00 00
+  0x0000001c:  21 00 00 00    ! . . .
   >> dump 0x1000 0x20
   0x00001000:  00 00 00 00
   0x00001004:  00 00 00 00
@@ -156,20 +158,17 @@ Implement a MIPS emulator that executes MIPS instructions loaded on the memory.
   0x00001010:  00 00 00 00
   0x00001014:  00 00 00 00
   0x00001018:  00 00 00 00
+  0x0000101c:  00 00 00 00
   >> load program
   >> dump 0x1000 32
-  0x00001000:  02 32 40 20     2 @
-  0x00001004:  8e 09 00 00    �
-  0x00001008:  8e 0a 00 04    �
-
-  0x0000100c:  ae 0a 00 08    �
-
-  0x00001010:  ff ff ff ff    � � � �
-  0x00001014:  00 00 00 00
-  0x00001018:  00 00 00 00
-  0x0000101c:  00 00 00 00
-
-
+  0x00001000:  02 32 40 20    . 2 @
+  0x00001004:  8e 09 00 00    . . . .
+  0x00001008:  8e 0a 00 04    . . . .
+  0x0000100c:  ae 0a 00 08    . . . .
+  0x00001010:  ff ff ff ff    . . . .
+  0x00001014:  00 00 00 00    . . . .
+  0x00001018:  00 00 00 00    . . . .
+  0x0000101c:  00 00 00 00    . . . .
   ```
 
   Note that the halt instruction is inserted at  0x00001010 (0xffffffff) after the program.
@@ -182,7 +181,7 @@ Implement a MIPS emulator that executes MIPS instructions loaded on the memory.
 
 - Use the program for PA1 to generate the machine codes for the testing input. Further, you can paste your `translate()` function from PA1 into pa2.c and compile with `-DINPUT_ASSEMBLY` to make the program inputs assembly instead of machine code!
 - Use `strtoimax/strtol` to implement `load_program()`.
-- Sometimes, values seem to be flipped because MIPS is big endian whereas x86 is little endian. Careful to handle the endianness! (if you `printf()` an integer value, it will be interpreted as little endian!!!)
+- Be careful to handle endianness. Sometimes, values seem to be flipped because MIPS is big endian whereas x86 is little endian. If you `printf()` an integer value, it will be interpreted as little endian!!!
 - You can make a pull request to correct mistakes / bugfixes. This will be accounted for your bonus points.
 - From this project, some testcases will show only the decision (i.e., pass or fail) not the details. However, the their results will be used for grading.
 - Do not modify codes in restriction zones. However, you can do whatever you want outside the zones.
@@ -206,6 +205,6 @@ Implement a MIPS emulator that executes MIPS instructions loaded on the memory.
 	- No more than ***three*** pages
 	  - Do not include cover pagE
 		- OTHERWISE YOU WILL GET 0 pts for the report
-- Git repository URL at git.ajou.ac.kr (10 pts)
+- Git repository URL at http://git.ajou.ac.kr (10 pts)
 
 - WILL NOT ANSWER THE QUESTIONS ABOUT THOSE ALREADY SPECIFIED ON THE HANDOUT.

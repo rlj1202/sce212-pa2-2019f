@@ -240,8 +240,10 @@ static void __dump_memory(unsigned int addr, size_t length)
 				addr + i,
                 memory[addr + i    ], memory[addr + i + 1],
                 memory[addr + i + 2], memory[addr + i + 3],
-                memory[addr + i    ], memory[addr + i + 1],
-                memory[addr + i + 2], memory[addr + i + 3]);
+                isprint(memory[addr + i    ]) ? memory[addr + i    ] : '.',
+				isprint(memory[addr + i + 1]) ? memory[addr + i + 1] : '.',
+				isprint(memory[addr + i + 2]) ? memory[addr + i + 2] : '.',
+				isprint(memory[addr + i + 3]) ? memory[addr + i + 3] : '.');
     }
 }
 
