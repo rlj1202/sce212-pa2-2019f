@@ -12,14 +12,14 @@ Implement a MIPS emulator that executes MIPS instructions loaded on the memory.
 - In this PA, we continue on implementing a MIPS emulator. Likewise the previous PAs, the framework gets a line of command, parses it, and then calls relavant procedures to process the request.
 
 -  We define a program as *a list of machine instructions*. It looks like;
-
-  ```
+	```
 	0x8c080000
 	0x8c090008  // lw t1, zero + 8
 	0xac090020
 	0x20080030  // addi t0 zero 0x30
 	```
-	Each line in a program file starts with a hexadecimal number, which is a MIPS machine code. The machine code might be followed by comments (like the 2nd and 4th instructions above). The emulaor is supposed to load the program into memory and starts executing the instructions until it meets a `halt` instruction. See test case files for examples of programs.
+
+- Each line in a program file starts with a hexadecimal number, which is a MIPS machine code. The machine code might be followed by comments (like the 2nd and 4th instructions above). The emulaor is supposed to load the program into memory and starts executing the instructions until it meets a `halt` instruction. See test case files for examples of programs.
 
 - The machine has 32 registers and their values are in `unsigned int registers[32]`. Their name is specified in `const char *register_names[32]`, and their status can be examined using `show` CLI command. Without specifying the register name, `show` shows all register values as follows;
 
@@ -59,7 +59,8 @@ Implement a MIPS emulator that executes MIPS instructions loaded on the memory.
   [31:ra] 0x00000000    0
   [  pc ] 0x00001000
   ```
-  You can specify register name to see the value of the register only. Note that register #0 is named to `zr`.
+
+- You can specify register name to see the value of the register only. Note that register #0 is named to `zr`.
   ```
   >> show s4
   [20:s4] 0xbadacafe    3134900990
@@ -69,7 +70,6 @@ Implement a MIPS emulator that executes MIPS instructions loaded on the memory.
 
 
 - The machine also has 1MB memory which is accessible through  `unsigned char memory[]`. Like the registers, the framework provides `dump` CLI command to examine memory contents. It accepts the starting address and length for command parameters.
-
   ```
   >> dump 0 32
   0x00000000:  00 11 22 33      " 3
