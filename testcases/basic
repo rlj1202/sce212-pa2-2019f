@@ -1,0 +1,34 @@
+show
+dump 0 16
+0x02110820	# add at s0 s1
+0x22020020  # addi v0 s0 32
+0x02d51822  # sub v1 s6 s5
+0x02952024  # and a0 s4 s5
+0x32c5beef  # andi a1 s6 0xbeef
+0x02953025  # or a2 s4 s5
+0x3687beef  # ori a3 s4 0xbeef
+0x02954027  # nor t0 s4 s5
+0x00144c00  # sll t1 s4 16
+0x00145402  # srl t2 s4 16
+0x00115a03  # sra t3 s1 8
+0x00156403  # sra t4 s5 16
+0x0295682a  # slt t5 s4 s5
+0x2a6e0001  # slti t6 s3 0x01
+0x8fef0000  # lw t7 ra 0
+0xafef0004  # sw t7 ra 4
+show
+dump 0 16
+0x10000010	# beq zr zr 16
+0x11000010	# beq zr t0 16
+show pc
+0x1500fff1	# bne zr t0 -15
+0x14000064	# bne zr zr 100
+show pc
+0x02200008	# jr zr s1 zr
+show pc
+0x08000812	# j  0x2048
+show pc
+0x0c001024	# jal 0x4090
+show pc
+show ra
+0xffffffff	# halt

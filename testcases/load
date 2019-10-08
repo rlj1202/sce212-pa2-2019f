@@ -1,0 +1,2 @@
+load testcases/program-fibonacci
+dump 0x1000 0x50
