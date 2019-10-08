@@ -36,6 +36,9 @@ typedef unsigned char bool;
 #define false	0
 
 
+/**
+ * memory[] emulates the memory of the machine
+ */
 static unsigned char memory[1 << 20] = {	/* 1MB memory at 0x0000 0000 -- 0x0100 0000 */
 	0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77,
 	0xde, 0xad, 0xbe, 0xef, 0x00, 0x00, 0x00, 0x00,
@@ -47,9 +50,12 @@ static unsigned char memory[1 << 20] = {	/* 1MB memory at 0x0000 0000 -- 0x0100 
 	'c',  't',  'u',  'r',  'e',  '!',  0x00, 0x00,
 };
 
-#define INITIAL_PC	0x1000
-#define INITIAL_SP	0x8000
+#define INITIAL_PC	0x1000	/* Initial value for PC register */
+#define INITIAL_SP	0x8000	/* Initial location for stack pointer */
 
+/**
+ * Registers of the machine
+ */
 static unsigned int registers[32] = {
 	0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0,
@@ -57,6 +63,9 @@ static unsigned int registers[32] = {
 	0, 0, 0, 0, 0, INITIAL_SP, 0, 0,
 };
 
+/**
+ * Names of the registers. Note that $zero is shorten to zr
+ */
 const char *register_names[] = {
 	"zr", "at", "v0", "v1", "a0", "a1", "a2", "a3",
 	"t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7",
@@ -64,6 +73,9 @@ const char *register_names[] = {
 	"t8", "t9", "k0", "k1", "gp", "sp", "fp", "ra"
 };
 
+/**
+ * Program counter register
+ */
 static unsigned int pc = INITIAL_PC;
 
 /**
@@ -92,31 +104,32 @@ static inline bool strmatch(char * const str, const char *expect)
  * DESCRIPTION
  *   Execute the machine code given through @instr. The following table lists
  *   up the instructions to support. Note that a pseudo instruction 'halt'
- *   (0xffffffff) is added for the testing purpose.
+ *   (0xffffffff) is added for the testing purpose. Also '*' instrunctions are
+ *   the ones that are newly added to PA2.
  *
- * | Name   | Opcode / opcode + funct |
- * | ------ | ----------------------- |
- * | `add`  | 0 + 0x20                |
- * | `addi` | 0x08                    |
- * | `sub`  | 0 + 0x22                |
- * | `and`  | 0 + 0x24                |
- * | `andi` | 0x0c                    |
- * | `or`   | 0 + 0x25                |
- * | `ori`  | 0x0d                    |
- * | `nor`  | 0 + 0x27                |
- * | `sll`  | 0 + 0x00                |
- * | `srl`  | 0 + 0x02                |
- * | `sra`  | 0 + 0x03                |
- * | `lw`   | 0x23                    |
- * | `sw`   | 0x2b                    |
- * | `slt`  | 0 + 0x2a                |
- * | `slti` | 0 + 0x0a                |
- * | `beq`  | 0x04                    |
- * | `bne`  | 0x05                    |
- * | `jr`   | 0 + 0x08                |
- * | `j`    | 0x02                    |
- * | `jal`  | 0x03                    |
- * | `halt` | @instr == 0xffffffff    |
+ * | Name   | Format    | Opcode / opcode + funct |
+ * | ------ | --------- | ----------------------- |
+ * | `add`  | r-format  | 0 + 0x20                |
+ * | `addi` | i-format  | 0x08                    |
+ * | `sub`  | r-format  | 0 + 0x22                |
+ * | `and`  | r-format  | 0 + 0x24                |
+ * | `andi` | i-format  | 0x0c                    |
+ * | `or`   | r-format  | 0 + 0x25                |
+ * | `ori`  | i-format  | 0x0d                    |
+ * | `nor`  | r-format  | 0 + 0x27                |
+ * | `sll`  | r-format  | 0 + 0x00                |
+ * | `srl`  | r-format  | 0 + 0x02                |
+ * | `sra`  | r-format  | 0 + 0x03                |
+ * | `lw`   | i-format  | 0x23                    |
+ * | `sw`   | i-format  | 0x2b                    |
+ * | `slt`  | r-format* | 0 + 0x2a                |
+ * | `slti` | r-format* | 0 + 0x0a                |
+ * | `beq`  | i-format* | 0x04                    |
+ * | `bne`  | i-format* | 0x05                    |
+ * | `jr`   | r-format* | 0 + 0x08                |
+ * | `j`    | j-format* | 0x02                    |
+ * | `jal`  | j-format* | 0x03                    |
+ * | `halt` | special*  | @instr == 0xffffffff    |
  *
  * RETURN VALUE
  *   1 if successfully processed the instruction.
