@@ -19,7 +19,6 @@
 #include <string.h>
 #include <inttypes.h>
 #include <ctype.h>
-#include <arpa/inet.h>
 
 /*====================================================================*/
 /*          ****** DO NOT MODIFY ANYTHING FROM THIS LINE ******       */
@@ -36,11 +35,16 @@ typedef unsigned char bool;
 #define true	1
 #define false	0
 
+
 static unsigned char memory[1 << 20] = {	/* 1MB memory at 0x0000 0000 -- 0x0100 0000 */
 	0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77,
 	0xde, 0xad, 0xbe, 0xef, 0x00, 0x00, 0x00, 0x00,
-	'h',  'e',  'l',  'l',  'o'	, ' ',  'w' , 'o',
-	'r',  'l',  'd',  '!',  0x00
+	'h',  'e',  'l',  'l',  'o',  ' ',  'w',  'o',
+	'r',  'l',  'd',  '!',  '!',  0x00, 0x00, 0x00,
+	'a',  'w',  'e',  's',  'o',  'm',  'e',  ' ',
+	'c',  'o',  'm',  'p',  'u',  't',  'e',  'r',
+	' ',  'a',  'r',  'c',  'h',  'i',  't',  'e',
+	'c',  't',  'u',  'r',  'e',  '!',  0x00, 0x00,
 };
 
 #define INITIAL_PC	0x1000
@@ -49,7 +53,7 @@ static unsigned char memory[1 << 20] = {	/* 1MB memory at 0x0000 0000 -- 0x0100 
 static unsigned int registers[32] = {
 	0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0,
-	0x10, INITIAL_PC, 2, 3, 0xbadacafe, 0xcdcdcdcd, 0xffffffff, 7,
+	0x10, INITIAL_PC, 0x20, 3, 0xbadacafe, 0xcdcdcdcd, 0xffffffff, 7,
 	0, 0, 0, 0, 0, INITIAL_SP, 0, 0,
 };
 
@@ -75,14 +79,14 @@ static unsigned int pc = INITIAL_PC;
  */
 static inline bool strmatch(char * const str, const char *expect)
 {
-	return strncmp(str, expect, strlen(expect)) == 0;
+	return (strlen(str) == strlen(expect)) && (strncmp(str, expect, strlen(expect)) == 0);
 }
 
 /*          ****** DO NOT MODIFY ANYTHING UP TO THIS LINE ******      */
 /*====================================================================*/
 
 
-/**
+/**********************************************************************
  * process_instruction
  *
  * DESCRIPTION
@@ -124,7 +128,7 @@ static int process_instruction(unsigned int instr)
 }
 
 
-/**
+/**********************************************************************
  * load_program
  *
  * DESCRIPTION
@@ -161,7 +165,7 @@ static int load_program(char * const filename)
 }
 
 
-/**
+/**********************************************************************
  * run_program
  *
  * DESCRIPTION
@@ -293,7 +297,7 @@ static int __parse_command(char *command, int *nr_tokens, char *tokens[])
 
 	/* Exclude comments from tokens */
 	for (int i = 0; i < *nr_tokens; i++) {
-		if (strmatch(tokens[i], "//")) {
+		if (strmatch(tokens[i], "//") || strmatch(tokens[i], "#")) {
 			*nr_tokens = i;
 			tokens[i] = NULL;
 		}
