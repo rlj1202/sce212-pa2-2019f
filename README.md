@@ -190,21 +190,23 @@ Implement a MIPS emulator that executes MIPS instructions loaded on the memory.
 ### Submission / Grading
 
 - Use [PAsubmit](https://sslab.ajou.ac.kr/pasubmit) for submission
-	- 420 + 10 pts in total
+	- 420 pts + 10 pts
+	- Some testcases might wil be hidden
+
 - Source: pa2.c (400 pts)
   - Basic execution: 200 pts (10 pts x 20 instructions)
 	- Load program: 40 pts
   - Run program: 160 pts
     - Basic: 60 pts
     - With jumps and loops: 100 pts
+
 - Document: one PDF document (20 pts) including;
-	- How do you process MIPS instructions
-	- How do you load the program into the memory
-	- How do you run the program
+	- How you process the MIPS instructions
+	- How you load the program into the memory
+	- How you run the program
 	- Lesson learned (if you have any)
-	- No more than ***three*** pages
-	  - Do not include cover pagE
-		- OTHERWISE YOU WILL GET 0 pts for the report
-- Git repository URL at http://git.ajou.ac.kr (10 pts)
+	- No more than three pages
+
+- Git repository (HTTP URL) at http://git.ajou.ac.kr (10 pts). Use deploy token and deploy password.
 
 - WILL NOT ANSWER THE QUESTIONS ABOUT THOSE ALREADY SPECIFIED ON THE HANDOUT.
