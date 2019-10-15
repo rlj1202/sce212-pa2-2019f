@@ -123,7 +123,7 @@ static inline bool strmatch(char * const str, const char *expect)
  * | `lw`   | i-format  | 0x23                    |
  * | `sw`   | i-format  | 0x2b                    |
  * | `slt`  | r-format* | 0 + 0x2a                |
- * | `slti` | r-format* | 0 + 0x0a                |
+ * | `slti` | i-format* | 0x0a                    |
  * | `beq`  | i-format* | 0x04                    |
  * | `bne`  | i-format* | 0x05                    |
  * | `jr`   | r-format* | 0 + 0x08                |

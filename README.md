@@ -107,12 +107,12 @@ Implement a MIPS emulator that executes MIPS instructions loaded on the memory.
   | `ori`  |   I    | 0x0d                   |
   | `nor`  |   R    | 0 + 0x27               |
   | `sll`  |   R    | 0 + 0x00               |
-	| `srl`  |   R    | 0 + 0x02               |
+  | `srl`  |   R    | 0 + 0x02               |
   | `sra`  |   R    | 0 + 0x03               |
   | `lw`   |   I    | 0x23                   |
   | `sw`   |   I    | 0x2b                   |
   | **`slt`**  |   R    | 0 + 0x2a               |
-	| **`slti`** |   R    | 0 + 0x0a               |
+  | **`slti`** |   I    | 0x0a                   |
   | **`beq`**  |   I    | 0x04                   |
   | **`bne`**  |   I    | 0x23                   |
   | **`jr`**   |   R    | 0 + 0x08               |
