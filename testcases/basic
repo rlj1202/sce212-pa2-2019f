@@ -1,6 +1,6 @@
 show
 dump 0 16
-0x02110820   add at s0 s1
+0x02110820  # add at s0 s1
 0x22020020  # addi v0 s0 32
 0x02d51822  # sub v1 s6 s5
 0x02952024  # and a0 s4 s5

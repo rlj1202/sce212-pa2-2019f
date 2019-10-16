@@ -112,9 +112,9 @@ Implement a MIPS emulator that executes MIPS instructions loaded on the memory.
   | `lw`   |   I    | 0x23                   |
   | `sw`   |   I    | 0x2b                   |
   | **`slt`**  |   R    | 0 + 0x2a               |
-	| **`slti`** |   R    | 0 + 0x0a               |
+	| **`slti`** |   I    | 0x0a                   |
   | **`beq`**  |   I    | 0x04                   |
-  | **`bne`**  |   I    | 0x23                   |
+  | **`bne`**  |   I    | 0x05                   |
   | **`jr`**   |   R    | 0 + 0x08               |
   | **`j`**    |   J    | 0x02                   |
   | **`jal`**  |   J    | 0x03                   |
@@ -194,9 +194,9 @@ Implement a MIPS emulator that executes MIPS instructions loaded on the memory.
 	- Some testcases might wil be hidden
 
 - Source: pa2.c (400 pts)
-  - Basic execution: 200 pts (10 pts x 20 instructions)
+	- Basic execution: 200 pts (10 pts x 20 instructions)
 	- Load program: 40 pts
-  - Run program: 160 pts
+	- Run program: 160 pts
     - Basic: 60 pts
     - With jumps and loops: 100 pts
 
